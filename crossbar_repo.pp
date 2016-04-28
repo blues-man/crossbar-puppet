@@ -24,11 +24,12 @@ class crossbar_repo {
       source => "puppet:///modules/foo/rpm-gpg/RPM-GPG-KEY-crossbar",
     }
 
-    exec { "import-crossbar":
+    exec { "import_crossbar_gpg_key":
       path      => '/bin:/usr/bin:/sbin:/usr/sbin',
       command   => "rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-crossbar",
       unless    => "rpm -q gpg-pubkey-$(echo $(gpg --throw-keyids --keyid-format short < /etc/pki/rpm-gpg/RPM-GPG-KEY-crossbar) | cut --characters=11-18 | tr '[A-Z]' '[a-z]')",
-      require   => [File["/etc/pki/rpm-gpg/RPM-GPG-KEY-crossbar"], Yumrepo["crossbar"]],
+      require   => File["/etc/pki/rpm-gpg/RPM-GPG-KEY-crossbar"],
+      before    => Yumrepo["crossbar"],
       logoutput => 'on_failure',
     }
 
