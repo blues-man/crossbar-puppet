@@ -1,4 +1,4 @@
-class repo {
+class crossbar::repo {
   $osver = split($::operatingsystemrelease, '[.]')
 
   if $::operatingsystem == "CentOS" {
