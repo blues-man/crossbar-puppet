@@ -23,6 +23,10 @@
 
 ### Beginning with crossbar
 
+```
+include ::crossbar
+
+```
 
 ## Usage
 
