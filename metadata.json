@@ -1,10 +1,10 @@
 {
   "name": "bluesman-crossbar",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "author": "Natale Vinto",
   "summary": "Crossbar.io puppet module",
   "license": "AGPL",
-  "source": "",
+  "source": "https://github.com/blues-man/crossbar-puppet.git",
   "project_page": null,
   "issues_url": null,
   "dependencies": [
