@@ -78,7 +78,7 @@ class crossbar ($user = "crossbar") {
 
   service { "crossbar":
     enable  => true,
-    status  => running,
+    ensure  => running,
     require => Exec["init_crossbar"]
   }
 

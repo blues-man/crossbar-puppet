@@ -14,16 +14,19 @@
 ## Description
 
 This module ships a fresh Crossbar.io WAMP Router on your CentOS 7 system
+
 A Systemd service is provided to manage crossbar application
 
 ## Setup
 
 
-### Setup Requirements **OPTIONAL**
+### Setup requirements
 
 * CentOS 7
 
 ### Beginning with crossbar
+
+By default Crossbar is installed for crossbar system user
 
 ```
 include ::crossbar
@@ -32,9 +35,19 @@ include ::crossbar
 
 ## Usage
 
+You can assign your own Crossbar system user passing it to the class constructor
+
 ```
-systemctl start crossbar
+class { 'crossbar': 
+    user => 'ubuntu'
+}
 ```
+Manage then crossbar as systemd daemon
+
+```
+systemctl start|status|restart|stop crossbar
+```
+
 ## Reference
 
 http://crossbar.io/docs/Installation-on-CentOS/
@@ -44,4 +57,4 @@ http://crossbar.io/docs/Installation-on-CentOS/
 Only support config.json ex novo for now
 ## Development
 
-
+https://github.com/blues-man/crossbar-puppet

@@ -1,6 +1,6 @@
 {
   "name": "bluesman-crossbar",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Natale Vinto",
   "summary": "Crossbar.io puppet module",
   "license": "AGPL",
