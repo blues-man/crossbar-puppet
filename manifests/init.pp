@@ -1,42 +1,33 @@
 # Class: crossbar
-# ===========================
+#===========================
 #
-# Full description of class crossbar here.
+# Crossbar.io WAMP Router Puppet module
 #
 # Parameters
-# ----------
+#----------
 #
-# * `sample parameter`
-# Explanation of what this parameter affects and what it defaults to.
-# e.g. "Specify one or more upstream ntp servers as an array."
+# * `user`
+# A system user that init and starts Crossbar through Systemd
+# Default is: crossbar
 #
-# Variables
-# ----------
-#
-# * `sample variable`
-#  Explanation of how this variable affects the function of this class and if
-#  it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#  External Node Classifier as a comma separated list of hostnames." (Note,
-#  global variables should be avoided in favor of class parameters as
-#  of Puppet 2.6.)
 #
 # Examples
-# --------
+#--------
 #
 # @example
 #    class { 'crossbar':
-#      servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
+#      user => 'centos',
 #    }
 #
 # Authors
-# -------
+#-------
 #
-# Author Name <author@domain.com>
+# Natale Vinto <ebballon@gmail.com>
 #
 # Copyright
-# ---------
+#---------
 #
-# Copyright 2016 Your name here, unless otherwise noted.
+# Copyright 2016 Natale Vinto.
 #
 class crossbar ($user = "crossbar") {
   include crossbar::repo
@@ -45,7 +36,7 @@ class crossbar ($user = "crossbar") {
     ensure     => 'present',
     home       => "/home/${user}",
     shell      => '/bin/bash',
-    managehome => 'true',
+    managehome => true,
   }
 
   Class['crossbar::repo'] ->

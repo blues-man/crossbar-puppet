@@ -23,6 +23,8 @@ A Systemd service is provided to manage crossbar application
 ### Setup requirements
 
 * CentOS 7
+* RHEL 7
+* Ubuntu 14.04
 
 ### Beginning with crossbar
 
@@ -39,7 +41,7 @@ You can assign your own Crossbar system user passing it to the class constructor
 
 ```
 class { 'crossbar': 
-    user => 'ubuntu'
+    user => 'centos'
 }
 ```
 Manage then crossbar as systemd daemon
@@ -51,10 +53,12 @@ systemctl start|status|restart|stop crossbar
 ## Reference
 
 http://crossbar.io/docs/Installation-on-CentOS/
+http://crossbar.io/docs/Installation-on-Ubuntu/
 
 ## Limitations
 
 Only support config.json ex novo for now
+
 ## Development
 
 https://github.com/blues-man/crossbar-puppet
