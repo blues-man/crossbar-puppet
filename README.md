@@ -13,9 +13,10 @@
 
 ## Description
 
-This module ships a fresh Crossbar.io WAMP Router on your CentOS 7 system
+This module ships a fresh Crossbar.io WAMP Router on your systems
 
-A Systemd service is provided to manage crossbar application
+A Systemd service is provided to manage crossbar application, and also Upstart support
+for Ubuntu 14.04 compatibility
 
 ## Setup
 
@@ -48,6 +49,12 @@ Manage then crossbar as systemd daemon
 
 ```
 systemctl start|status|restart|stop crossbar
+```
+
+Manage crossbar with upstart
+
+```
+service crossbar start|status|restart|stop
 ```
 
 ## Reference
