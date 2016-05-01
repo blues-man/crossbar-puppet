@@ -13,7 +13,7 @@
 
 ## Description
 
-This module ships a fresh Crossbar.io WAMP Router on your systems
+This module ships a fresh [Crossbar.io](http://crossbar.io/) WAMP Router on your systems
 
 A Systemd service is provided to manage crossbar application, and also Upstart support
 for Ubuntu 14.04 compatibility
@@ -60,6 +60,7 @@ service crossbar start|status|restart|stop
 ## Reference
 
 http://crossbar.io/docs/Installation-on-CentOS/
+
 http://crossbar.io/docs/Installation-on-Ubuntu/
 
 ## Limitations
