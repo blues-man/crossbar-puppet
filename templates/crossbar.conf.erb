@@ -1,0 +1,12 @@
+description "Crossbar.io"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+respawn limit 20 5
+
+setuid <%= @user %>
+setgid <%= @user %>
+
+exec /opt/crossbar/bin/crossbar start --cbdir=/home/<%= @user %>/.crossbar

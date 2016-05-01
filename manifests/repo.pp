@@ -16,7 +16,7 @@ class crossbar::repo {
       priority => 30,
     }
   } elsif $::operatingsystem == "Ubuntu" {
-    case $osver[0] {
+    case $::operatingsystemrelease {
       '14.04' : { $release = 'trusty' }
       default : { fail('Unsupported version of Ubuntu') }
     }

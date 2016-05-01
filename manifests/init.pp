@@ -42,11 +42,22 @@ class crossbar ($user = "crossbar") {
   Class['crossbar::repo'] ->
   package { 'crossbar': ensure => installed }
 
-  file { "/lib/systemd/system/crossbar.service":
-    content => template("crossbar/crossbar.service.erb"),
-    ensure  => file,
-    require => User[$user],
-    notify  => Service["crossbar"]
+  if $::operatingsystem != "Ubuntu" {
+    file { "/lib/systemd/system/crossbar.service":
+      content => template("crossbar/crossbar.service.erb"),
+      ensure  => file,
+      require => User[$user],
+      notify  => Service["crossbar"]
+    }
+
+  } else {
+    file { "/etc/init/crossbar.conf":
+      content => template("crossbar/crossbar.conf.erb"),
+      ensure  => file,
+      require => User[$user],
+      notify  => Service["crossbar"]
+    }
+
   }
 
   file { "/home/${user}/.crossbar/":
