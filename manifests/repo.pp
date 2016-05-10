@@ -23,7 +23,7 @@ class crossbar::repo {
     include apt
 
     apt::source { 'crossbar':
-      comment  => 'Crossbar.iot official binary packages',
+      comment  => 'Crossbar.io official binary packages',
       location => 'http://package.crossbar.io/ubuntu',
       release  => $release,
       repos    => 'main',

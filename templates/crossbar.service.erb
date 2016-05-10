@@ -9,7 +9,7 @@ Group=<%= @user %>
 StandardInput=null
 StandardOutput=journal
 StandardError=journal
-ExecStart=/opt/crossbar/bin/crossbar start --cbdir=/home/<%= @user %>/.crossbar
+ExecStart=/opt/crossbar/bin/crossbar start --cbdir=/home/<%= @user %>/.crossbar --loglevel=<%= @log_level %> --logtofile --logdir /home/<%= @user %>
 Restart=on-abort
 
 [Install]

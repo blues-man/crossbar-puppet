@@ -29,8 +29,13 @@
 #
 # Copyright 2016 Natale Vinto.
 #
-class crossbar ($user = "crossbar") {
+class crossbar ($user = "crossbar", $log_level = 'none') {
   include crossbar::repo
+
+  case $log_level {
+    /(none|critical|error|warn|info|debug|trace)/ : { notice("Deploying Crossbar with log level ${1}") }
+    default : { fail("Log level not valid, choose one from: none|critical|error|warn|info|debug|trace") }
+  }
 
   user { $user:
     ensure     => 'present',
@@ -42,17 +47,16 @@ class crossbar ($user = "crossbar") {
   Class['crossbar::repo'] ->
   package { 'crossbar': ensure => installed }
 
-  if $::operatingsystem != "Ubuntu" {
-    file { "/lib/systemd/system/crossbar.service":
-      content => template("crossbar/crossbar.service.erb"),
+  if $::operatingsystem == "Ubuntu" {
+    file { "/etc/init/crossbar.conf":
+      content => template("crossbar/crossbar.conf.erb"),
       ensure  => file,
       require => User[$user],
       notify  => Service["crossbar"]
     }
-
   } else {
-    file { "/etc/init/crossbar.conf":
-      content => template("crossbar/crossbar.conf.erb"),
+    file { "/lib/systemd/system/crossbar.service":
+      content => template("crossbar/crossbar.service.erb"),
       ensure  => file,
       require => User[$user],
       notify  => Service["crossbar"]

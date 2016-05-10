@@ -9,4 +9,4 @@ respawn limit 20 5
 setuid <%= @user %>
 setgid <%= @user %>
 
-exec /opt/crossbar/bin/crossbar start --cbdir=/home/<%= @user %>/.crossbar
+exec /opt/crossbar/bin/crossbar start --cbdir=/home/<%= @user %>/.crossbar --loglevel=<%= @log_level %> --logtofile --logdir /home/<%= @user %>

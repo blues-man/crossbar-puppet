@@ -29,7 +29,7 @@ for Ubuntu 14.04 compatibility
 
 ### Beginning with crossbar
 
-By default Crossbar is installed for crossbar system user
+By default Crossbar is installed for crossbar system user with debug level set to 'none'
 
 ```
 include ::crossbar
@@ -38,11 +38,13 @@ include ::crossbar
 
 ## Usage
 
-You can assign your own Crossbar system user passing it to the class constructor
+You can assign your own Crossbar system user passing it to the class constructor, with
+your preferred log level
 
 ```
 class { 'crossbar': 
-    user => 'centos'
+    user      => 'centos',
+    log_level => 'debug'
 }
 ```
 Manage then crossbar as systemd daemon
