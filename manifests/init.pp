@@ -9,6 +9,12 @@
 # * `user`
 # A system user that init and starts Crossbar through Systemd
 # Default is: crossbar
+# * `log_level`
+# Crossbar service log level, select one from: none|critical|error|warn|info|debug|trace
+# Default is: none
+# * `config`
+# A user created config.json to be provided as file source puppet:// or file:///
+# Default is: undef
 #
 #
 # Examples
@@ -101,7 +107,6 @@ class crossbar ($user = "crossbar", $log_level = 'none', $config = undef) {
         require     => Package['crossbar'],
         subscribe   => File["/home/${user}/.crossbar/config.json"]
       }
-
     } else {
       fail("config.json location should be file:/// or puppet://")
     }
