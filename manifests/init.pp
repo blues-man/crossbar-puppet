@@ -29,7 +29,7 @@
 #
 # Copyright 2016 Natale Vinto.
 #
-class crossbar ($user = "crossbar", $log_level = 'none') {
+class crossbar ($user = "crossbar", $log_level = 'none', $config = undef) {
   include crossbar::repo
 
   case $log_level {
@@ -71,15 +71,40 @@ class crossbar ($user = "crossbar", $log_level = 'none') {
     require => User[$user]
   }
 
-  exec { 'init_crossbar':
-    command     => "/opt/crossbar/bin/crossbar init",
-    onlyif      => "/usr/bin/test -d /home/${user}/.crossbar",
-    user        => $user,
-    cwd         => "/home/${user}/",
-    logoutput   => true,
-    refreshonly => true,
-    require     => Package['crossbar'],
-    subscribe   => File["/home/${user}/.crossbar/"]
+  if $config == undef {
+    exec { 'init_crossbar':
+      command     => "/opt/crossbar/bin/crossbar init",
+      onlyif      => "/usr/bin/test -d /home/${user}/.crossbar",
+      user        => $user,
+      cwd         => "/home/${user}/",
+      logoutput   => true,
+      refreshonly => true,
+      require     => Package['crossbar'],
+      subscribe   => File["/home/${user}/.crossbar/"]
+    }
+  } else {
+    if $config =~ /^(file:|puppet:)/ {
+      file { "/home/${user}/.crossbar/config.json":
+        ensure  => file,
+        owner   => $user,
+        group   => $user,
+        require => File["/home/${user}/.crossbar/"]
+      }
+
+      exec { 'update_crossbar':
+        command     => "/opt/crossbar/bin/crossbar update --cbdir=/home/${user}/.crossbar ",
+        onlyif      => "/usr/bin/test -d /home/${user}/.crossbar",
+        user        => $user,
+        cwd         => "/home/${user}/",
+        logoutput   => true,
+        refreshonly => true,
+        require     => Package['crossbar'],
+        subscribe   => File["/home/${user}/.crossbar/config.json"]
+      }
+
+    } else {
+      fail("config.json location should be file:/// or puppet://")
+    }
   }
 
   service { "crossbar":
