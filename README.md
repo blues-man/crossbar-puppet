@@ -58,7 +58,7 @@ class { 'crossbar':
 
 ```
 class { 'crossbar': 
-    config_json  => "source://modules/foo/config.json",
+    config_json  => "puppet://modules/foo/config.json",
 }
 ```
 
