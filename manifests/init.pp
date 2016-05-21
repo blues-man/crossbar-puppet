@@ -35,7 +35,13 @@
 #
 # Copyright 2016 Natale Vinto.
 #
-class crossbar ($user = "crossbar", $log_level = 'none', $config = undef) {
+class crossbar ($user = "crossbar",
+		$service_enable = true,
+		$service_status = running,
+		$service_name = "crossbar",
+		$log_level = 'none',
+		$config_json = undef
+		) {
   include crossbar::repo
 
   case $log_level {
@@ -54,18 +60,18 @@ class crossbar ($user = "crossbar", $log_level = 'none', $config = undef) {
   package { 'crossbar': ensure => installed }
 
   if $::operatingsystem == "Ubuntu" {
-    file { "/etc/init/crossbar.conf":
+    file { "/etc/init/${service_name}.conf":
       content => template("crossbar/crossbar.conf.erb"),
       ensure  => file,
       require => User[$user],
-      notify  => Service["crossbar"]
+      notify  => Service[$service_name]
     }
   } else {
-    file { "/lib/systemd/system/crossbar.service":
+    file { "/lib/systemd/system/${service_name}.service":
       content => template("crossbar/crossbar.service.erb"),
       ensure  => file,
       require => User[$user],
-      notify  => Service["crossbar"]
+      notify  => Service[$service_name]
     }
 
   }
@@ -77,7 +83,7 @@ class crossbar ($user = "crossbar", $log_level = 'none', $config = undef) {
     require => User[$user]
   }
 
-  if $config == undef {
+  if $config_json == undef {
     exec { 'init_crossbar':
       command     => "/opt/crossbar/bin/crossbar init",
       onlyif      => "/usr/bin/test -d /home/${user}/.crossbar",
@@ -88,22 +94,25 @@ class crossbar ($user = "crossbar", $log_level = 'none', $config = undef) {
       require     => Package['crossbar'],
       subscribe   => File["/home/${user}/.crossbar/"]
     }
+
   } else {
-    if $config =~ /^(file:|puppet:)/ {
+    if $config_json =~ /^(file:|puppet:)/ {
       file { "/home/${user}/.crossbar/config.json":
         ensure  => file,
         owner   => $user,
         group   => $user,
+        source  => $config_json,
         require => File["/home/${user}/.crossbar/"]
       }
 
-      exec { 'update_crossbar':
-        command     => "/opt/crossbar/bin/crossbar update --cbdir=/home/${user}/.crossbar ",
+      exec { 'upgrade_crossbar':
+        command     => "/opt/crossbar/bin/crossbar upgrade --cbdir=/home/${user}/.crossbar ",
         onlyif      => "/usr/bin/test -d /home/${user}/.crossbar",
         user        => $user,
         cwd         => "/home/${user}/",
         logoutput   => true,
         refreshonly => true,
+	notify      => Service[$service_name],
         require     => Package['crossbar'],
         subscribe   => File["/home/${user}/.crossbar/config.json"]
       }
@@ -112,10 +121,11 @@ class crossbar ($user = "crossbar", $log_level = 'none', $config = undef) {
     }
   }
 
-  service { "crossbar":
-    enable  => true,
-    ensure  => running,
-    require => Exec["init_crossbar"]
+  service { $service_name:
+    enable  => $service_enable,
+    ensure  => $service_status,
   }
+
+
 
 }
