@@ -9,10 +9,16 @@
 # * `user`
 # A system user that init and starts Crossbar through Systemd
 # Default is: crossbar
+# * `service_enable`
+# Service to start at boot
+# Default is: true
+# * `service_status`
+# Service status at runtime
+# Default is: running
 # * `log_level`
 # Crossbar service log level, select one from: none|critical|error|warn|info|debug|trace
 # Default is: none
-# * `config`
+# * `config_json`
 # A user created config.json to be provided as file source puppet:// or file:///
 # Default is: undef
 #

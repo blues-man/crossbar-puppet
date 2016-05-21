@@ -39,7 +39,7 @@ include ::crossbar
 ## Usage
 
 You can assign your own Crossbar system user passing it to the class constructor, with
-your preferred log level
+your preferred log level:
 
 ```
 class { 'crossbar': 
@@ -47,6 +47,30 @@ class { 'crossbar':
     log_level => 'debug'
 }
 ```
+
+You can also provide your custom config.json with your preferred options for Crossbar (port, tls, etc):
+
+```
+class { 'crossbar': 
+    config_json  => "file:///tmp/config.json",
+}
+```
+
+```
+class { 'crossbar': 
+    config_json  => "source://modules/foo/config.json",
+}
+```
+
+Crossbar service by default is enabled and running, but you can control it as you wish:
+
+```
+class { 'crossbar': 
+    service_enable  => false,
+    service_status  => stopped
+}
+```
+
 Manage then crossbar as systemd daemon
 
 ```

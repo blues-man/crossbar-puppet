@@ -14,15 +14,14 @@
 			]
 		}
 	],
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": "Natale Vinto",
-  "summary": "Crossbar.io puppet module",
-  "license": "AGPL",
+  "summary": "Crossbar.io Puppet module",
+  "license": "AGPL-3.0",
   "source": "https://github.com/blues-man/crossbar-puppet.git",
   "project_page": "https://github.com/blues-man/crossbar-puppet.git",
-  "issues_url": null,
+  "issues_url": "https://github.com/blues-man/crossbar-puppet/issues",
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
     {"name": "puppetlabs-apt", "version_requirement": ">=2.2.2"}
   ],
   "data_provider": null
