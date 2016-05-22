@@ -91,7 +91,7 @@ http://crossbar.io/docs/Installation-on-Ubuntu/
 
 ## Limitations
 
-Only support config.json ex novo for now
+This module depends on Crossbar.io packages releases.
 
 ## Development
 
