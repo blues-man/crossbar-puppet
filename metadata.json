@@ -10,11 +10,11 @@
 			]
 		},{
 			"operatingsystem": "Ubuntu",
-			"operatingsystemrelease": [ "14.04"
+			"operatingsystemrelease": [ "14.04", "16.04"
 			]
 		}
 	],
-  "version": "0.1.6",
+  "version": "0.1.8",
   "author": "Natale Vinto",
   "summary": "Crossbar.io Puppet module",
   "license": "AGPL-3.0",

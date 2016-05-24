@@ -25,7 +25,8 @@ for Ubuntu 14.04 compatibility
 
 * CentOS 7
 * RHEL 7
-* Ubuntu 14.04
+* Ubuntu 14.04 LTS
+* Ubuntu 16.04 LTS
 
 ### Beginning with crossbar
 

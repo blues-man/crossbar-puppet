@@ -1,3 +1,7 @@
+# Class: crossbar::repo
+#===========================
+#
+# Install Crossbar as RPM or DEB package for supported OS
 class crossbar::repo {
   $osver = split($::operatingsystemrelease, '[.]')
 
@@ -18,6 +22,7 @@ class crossbar::repo {
   } elsif $::operatingsystem == "Ubuntu" {
     case $::operatingsystemrelease {
       '14.04' : { $release = 'trusty' }
+      '16.04' : { $release = 'xenial' }
       default : { fail('Unsupported version of Ubuntu') }
     }
     include apt

@@ -41,13 +41,13 @@
 #
 # Copyright 2016 Natale Vinto.
 #
-class crossbar ($user = "crossbar",
-		$service_enable = true,
-		$service_status = running,
-		$service_name = "crossbar",
-		$log_level = 'none',
-		$config_json = undef
-		) {
+class crossbar (
+  $user           = "crossbar",
+  $service_enable = true,
+  $service_status = running,
+  $service_name   = "crossbar",
+  $log_level      = 'none',
+  $config_json    = undef) {
   include crossbar::repo
 
   case $log_level {
@@ -65,7 +65,7 @@ class crossbar ($user = "crossbar",
   Class['crossbar::repo'] ->
   package { 'crossbar': ensure => installed }
 
-  if $::operatingsystem == "Ubuntu" {
+  if $::operatingsystem == "Ubuntu" and $::operatingsystemrelease == "14.04" {
     file { "/etc/init/${service_name}.conf":
       content => template("crossbar/crossbar.conf.erb"),
       ensure  => file,
@@ -79,7 +79,6 @@ class crossbar ($user = "crossbar",
       require => User[$user],
       notify  => Service[$service_name]
     }
-
   }
 
   file { "/home/${user}/.crossbar/":
@@ -100,7 +99,6 @@ class crossbar ($user = "crossbar",
       require     => Package['crossbar'],
       subscribe   => File["/home/${user}/.crossbar/"]
     }
-
   } else {
     if $config_json =~ /^(file:|puppet:)/ {
       file { "/home/${user}/.crossbar/config.json":
@@ -118,7 +116,7 @@ class crossbar ($user = "crossbar",
         cwd         => "/home/${user}/",
         logoutput   => true,
         refreshonly => true,
-	notify      => Service[$service_name],
+        notify      => Service[$service_name],
         require     => Package['crossbar'],
         subscribe   => File["/home/${user}/.crossbar/config.json"]
       }
@@ -128,10 +126,8 @@ class crossbar ($user = "crossbar",
   }
 
   service { $service_name:
-    enable  => $service_enable,
-    ensure  => $service_status,
+    enable => $service_enable,
+    ensure => $service_status,
   }
-
-
 
 }
